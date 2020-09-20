@@ -18,48 +18,45 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 * 1.編寫Dockerfile文件
 * 2.docker build
 * 3.docker run<br/>
-![GITHUB]( 圖片網址 "圖片名稱")
+![image](https://github.com/apocalys0410/Photo/blob/master/Docker_Info.jpg)
 
 -----------------------------------------------
 
-## Dockerfile 格式 - 以 Centos 的文件為例
-
-`# 開啟 Dockerfile檔案`<br/>
-`mkdir mysql`<br/>
-`cd mysql`<br/>
-`vim Dockerfile `<br/>
-
------------------------------------------------
-
-## Dockerfile 範例 - 以 Mysql 為例
-
-###### # 基礎鏡像 CentOS
-`FROM guyton/centos6`
-
-###### # 維護該鏡像的用戶訊息
-`MAINTAINER The CentOS Project-MySQL <cloud-ops@centos.org>`
-
-###### # 鏡像操作指令，安裝 MySql
-`RUN yum -y update`
-`RUN yum -y install mysql mysql-server`
-
-###### # 開啟 MySql 並開權限
-`RUN /etc/init.d/mysqld start &&\`
-`mysql -e "grant all privileges on *.* to 'root'@'%' indentified by 'test1234';"&&\`
-`mysql -e "grant all privileges on *.* to 'root'@'localhost' indentified by 'test1234';"`
-
-###### # 開啟 3306 Port
-`EXPOSE 3306`
-
-###### # 啟動容器時要執行的命令
-`CMD ["mysqld_safe"]`
+## Dockerfile 目錄建置 - 以 Centos 的文件為例
+    # 開啟 Dockerfile檔案
+    mkdir mysql
+    cd mysql
+    vim Dockerfile
 
 -----------------------------------------------
 
-## Dockerfile 說明 - 注意事項
+## Dockerfile 範例建置 - 以 MySQL 為例
+    
+    # 基礎鏡像 CentOS
+    FROM guyton/centos6
+    
+    # 維護該鏡像的用戶訊息
+    MAINTAINER The CentOS Project-MySQL <cloud-ops@centos.org>
 
+    # 鏡像操作指令，安裝 MySQL
+    RUN yum -y update
+    RUN yum -y install mysql mysql-server
+
+    # 開啟 MySQL 並開權限 & 設置 root 密碼為 test1234
+    RUN /etc/init.d/mysqld start &&\
+    mysql -e "grant all privileges on *.* to 'root'@'%' indentified by 'test1234';"&&\
+    mysql -e "grant all privileges on *.* to 'root'@'localhost' indentified by 'test1234';"
+
+    # 開啟 3306 Port
+    EXPOSE 3306
+
+    # 啟動容器時要執行的命令
+    CMD ["mysqld_safe"]
+
+-----------------------------------------------
+
+## Dockerfile 規則說明 - 注意事項
 編寫 Dockerfile 時，有嚴格的格式需要遵循:
-
 - [x] 最初 - 需使用 FROM 指名所基於的鏡像名稱
 - [x] 接著 - 需使用 MAINTAINER 說明維護該鏡像的用戶信息
 - [x] 接著 - 鏡像操作相關的指令(如 RUN 來運行每一條指令)
@@ -68,4 +65,22 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 -----------------------------------------------
 
 
+## Dockerfile 生成鏡像 - 使用 docker build 建立鏡像
+    docker build -t centos:mysql .
+>>  Sending build context to Docker daemon 2.048 kB
+>>  ...
+>>  ...
+>>  ...
+>>  Successfully build f4adb0a404a2
 
+## Docker 運行容器驗證 - 驗證 local 至容器 3306 port
+    docker run --name=mysql_server -d -P centos:mysql
+>>  d69fd2dd827exxxxxx ...
+
+## 查看 local 對應到的 port
+    docker ps -a
+>>  d69fd2dd827e  centos:mysql ... 0.0.0.0:32777 -> 3306/tcp   mysql_server
+
+## 驗證從 local 登入 MySQL
+    mysql -h 127.0.0.1 -u root -P 32777 -ptest1234
+>>  Welcome to the MariaDB monitor. Commands end with; or \g. ...
