@@ -14,7 +14,7 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 
 -----------------------------------------------
 
-## Dockerfile 流程 - 用來構建 Docker 鏡像文件
+### Dockerfile 流程 - 用來構建 Docker 鏡像文件
 * 1.編寫Dockerfile文件
 * 2.docker build
 * 3.docker run<br/>
@@ -22,7 +22,7 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 
 -----------------------------------------------
 
-## Dockerfile 目錄建置 - 以 Centos 的文件為例
+### Dockerfile 目錄建置 - 以 Centos 的文件為例
     # 開啟 Dockerfile檔案
     mkdir mysql
     cd mysql
@@ -30,7 +30,7 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 
 -----------------------------------------------
 
-## Dockerfile 範例建置 - 以 MySQL 為例
+### Dockerfile 範例建置 - 以 MySQL 為例
     
     # 基礎鏡像 CentOS
     FROM guyton/centos6
@@ -55,7 +55,7 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 
 -----------------------------------------------
 
-## Dockerfile 規則說明 - 注意事項
+### Dockerfile 規則說明 - 注意事項
 編寫 Dockerfile 時，有嚴格的格式需要遵循:
 - [x] 最初 - 需使用 FROM 指名所基於的鏡像名稱
 - [x] 接著 - 需使用 MAINTAINER 說明維護該鏡像的用戶信息
@@ -65,22 +65,30 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 -----------------------------------------------
 
 
-## Dockerfile 生成鏡像 - 使用 docker build 建立鏡像
+### Dockerfile 生成鏡像 - 使用 docker build 建立鏡像
     docker build -t centos:mysql .
->>  Sending build context to Docker daemon 2.048 kB
->>  ...
->>  ...
->>  ...
->>  Successfully build f4adb0a404a2
+>   Sending build context to Docker daemon 2.048 kB
+>   ...
+>   ...
+>   ...
+>   Successfully build f4adb0a404a2
 
-## Docker 運行容器驗證 - 驗證 local 至容器 3306 port
+-----------------------------------------------
+
+### Docker 運行容器驗證 - 驗證 local 至容器 3306 port
     docker run --name=mysql_server -d -P centos:mysql
->>  d69fd2dd827exxxxxx ...
+>   d69fd2dd827exxxxxx ...
 
-## 查看 local 對應到的 port
+-----------------------------------------------
+
+### 查看 local 對應到的 port
     docker ps -a
->>  d69fd2dd827e  centos:mysql ... 0.0.0.0:32777 -> 3306/tcp   mysql_server
+>   d69fd2dd827e  centos:mysql ... 0.0.0.0:32777 -> 3306/tcp   mysql_server
 
-## 驗證從 local 登入 MySQL
+-----------------------------------------------
+
+### 驗證從 local 登入 MySQL
     mysql -h 127.0.0.1 -u root -P 32777 -ptest1234
->>  Welcome to the MariaDB monitor. Commands end with; or \g. ...
+>   Welcome to the MariaDB monitor. Commands end with; or \g. ...
+
+-----------------------------------------------
