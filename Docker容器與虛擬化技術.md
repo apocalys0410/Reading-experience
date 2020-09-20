@@ -17,7 +17,7 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 ## Dockerfile 流程 - 用來構建 Docker 鏡像文件
 * 1.編寫Dockerfile文件
 * 2.docker build
-* 3.docker run
+* 3.docker run<br/>
 ![GITHUB]( 圖片網址 "圖片名稱")
 
 -----------------------------------------------
@@ -40,13 +40,13 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 `MAINTAINER The CentOS Project-MySQL <cloud-ops@centos.org>`
 
 ###### # 鏡像操作指令，安裝 MySql
-`RUN yum -y update
-RUN yum -y install mysql mysql-server`
+`RUN yum -y update`
+`RUN yum -y install mysql mysql-server`
 
 ###### # 開啟 MySql 並開權限
-`RUN /etc/init.d/mysqld start &&\
-mysql -e "grant all privileges on *.* to 'root'@'%' indentified by 'test1234';"&&\
-mysql -e "grant all privileges on *.* to 'root'@'localhost' indentified by 'test1234';"`
+`RUN /etc/init.d/mysqld start &&\`
+`mysql -e "grant all privileges on *.* to 'root'@'%' indentified by 'test1234';"&&\`
+`mysql -e "grant all privileges on *.* to 'root'@'localhost' indentified by 'test1234';"`
 
 ###### # 開啟 3306 Port
 `EXPOSE 3306`
