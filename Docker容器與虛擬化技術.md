@@ -18,7 +18,7 @@ EX: 需要將 Server 從地端轉移到 AWS 上，只要使用Docker 容器技�
 * 1.編寫Dockerfile文件
 * 2.docker build
 * 3.docker run<br/>
-![image](https://github.com/apocalys0410/Photo/blob/master/Docker_Info.jpg)
+![image](https://github.com/apocalys0410/Reading-experience/blob/master/Docker_Info.jpg)
 
 -----------------------------------------------
 
